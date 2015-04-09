@@ -23,19 +23,21 @@
 
 %% pub/sub functions
 subscribe(Topic) ->
-  case gproc:lookup_local_properties(Topic) of
-    [] ->
+  Props = gproc:lookup_local_properties(Topic),
+  case lists:keymember(self(), 1, Props) of
+    false ->
       gproc:reg(gproc_local_property(Topic)),
       ok;
-    _ ->
+    true ->
       ok
   end.
 
 unsubscribe(Topic) ->
-  case gproc:lookup_local_properties(Topic) of
-    [] ->
+  Props = gproc:lookup_local_properties(Topic),
+  case lists:keymember(self(), 1, Props) of
+    false ->
       ok;
-    _ ->
+    true ->
       gproc:unreg(gproc_local_property(Topic)),
       ok
   end.
