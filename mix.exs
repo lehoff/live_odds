@@ -12,8 +12,8 @@ defmodule LiveOdds.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:gproc, :football_events],
-     mod: {:lo_app, []}]
+    [applications: [:jinterface, :gproc, :football_events],
+    mod: {:lo_app, []}]
   end
 
   # Dependencies can be Hex packages:
