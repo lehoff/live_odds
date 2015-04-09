@@ -1,0 +1,14 @@
+{application, live_odds, [
+	{description, ""},
+	{vsn, "0.0.1"},
+	{modules, []},
+	{registered, []},
+	{applications, [
+		kernel,
+		stdlib,
+                gproc,
+                football_events
+	]},
+	{mod, {lo_app, []}},
+	{env, []}
+]}.

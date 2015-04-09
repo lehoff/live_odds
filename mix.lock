@@ -1,0 +1,2 @@
+%{"football_events": {:git, "https://github.com/lehoff/football_events.git", "7277a9f09ef1c88d5aa71beb3f40be7385f64ae4", [branch: "master"]},
+  "gproc": {:git, "https://github.com/uwiger/gproc.git", "7655bddc4397d0cc3f7c4d95e7b96790605946fe", [branch: "master"]}}
