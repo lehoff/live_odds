@@ -23,11 +23,24 @@
 
 %% pub/sub functions
 subscribe(Topic) ->
-  gproc:reg(gproc_local_property(Topic)).
+  case gproc:lookup_local_properties(Topic) of
+    [] ->
+      gproc:reg(gproc_local_property(Topic)),
+      ok;
+    _ ->
+      ok
+  end.
 
 unsubscribe(Topic) ->
-  gproc:unreg(gproc_local_property(Topic)).
+  case gproc:lookup_local_properties(Topic) of
+    [] ->
+      ok;
+    _ ->
+      gproc:unreg(gproc_local_property(Topic)),
+      ok
+  end.
 
+  
 publish(Topic, Msg) ->
   gproc:send(gproc_local_property(Topic), Msg).
 
