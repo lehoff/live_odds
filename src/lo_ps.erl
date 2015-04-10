@@ -23,36 +23,36 @@
 
 %% pub/sub functions
 subscribe(Topic) ->
-  Props = gproc:lookup_local_properties(Topic),
+  Props = gproc:lookup_global_properties(Topic),
   case lists:keymember(self(), 1, Props) of
     false ->
-      gproc:reg(gproc_local_property(Topic)),
+      gproc:reg(gproc_global_property(Topic)),
       ok;
     true ->
       ok
   end.
 
 unsubscribe(Topic) ->
-  Props = gproc:lookup_local_properties(Topic),
+  Props = gproc:lookup_global_properties(Topic),
   case lists:keymember(self(), 1, Props) of
     false ->
       ok;
     true ->
-      gproc:unreg(gproc_local_property(Topic)),
+      gproc:unreg(gproc_global_property(Topic)),
       ok
   end.
 
   
 publish(Topic, Msg) ->
-  gproc:send(gproc_local_property(Topic), Msg).
+  gproc:send(gproc_global_property(Topic), Msg).
 
-gproc_local_property(Topic) ->
-  {p, l, Topic}.
+gproc_global_property(Topic) ->
+  {p, g, Topic}.
 
 
 lookup(Tag) ->
   Key = {Tag, '$1'},
-  GProcKey = {n, l, Key},
+  GProcKey = {n, g, Key},
   MatchHead = {GProcKey, '_', '_'},
   Guard = [],
   Result = [{{Tag, '$1'}}],
@@ -61,17 +61,17 @@ lookup(Tag) ->
 
 %% via naming callbacks
 register_name(Name, Pid) ->
-  gproc:register_name(gproc_local_name(Name), Pid).
+  gproc:register_name(gproc_global_name(Name), Pid).
 
 unregister_name(Name) ->
-  gproc:unregister_name(gproc_local_name(Name)).
+  gproc:unregister_name(gproc_global_name(Name)).
 
 whereis_name(Name) ->
-  gproc:whereis_name(gproc_local_name(Name)).
+  gproc:whereis_name(gproc_global_name(Name)).
 
 send(Name, Msg) ->
-  gproc:send(gproc_local_name(Name), Msg).
+  gproc:send(gproc_global_name(Name), Msg).
 
 
-gproc_local_name(Name) ->
-  {n, l, Name}.
+gproc_global_name(Name) ->
+  {n, g, Name}.
